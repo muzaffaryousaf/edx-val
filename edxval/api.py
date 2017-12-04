@@ -336,6 +336,17 @@ def create_or_update_video_transcript(
     return video_transcript.url()
 
 
+def delete_video_transcript(video_id, language_code):
+    """
+    Delete transcript for an existing video.
+
+    Arguments:
+        video_id: it can be an edx_video_id or an external_id extracted from external sources in a video component.
+        language_code: language code of a video transcript
+    """
+    VideoTranscript.objects.filter(video_id=video_id, language_code=language_code).delete()
+
+
 def get_3rd_party_transcription_plans():
     """
     Retrieves 3rd party transcription plans.

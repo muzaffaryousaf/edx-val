@@ -1950,6 +1950,18 @@ class TranscriptTest(TestCase):
         transcript_languages = api.get_available_transcript_languages(video_ids=video_ids)
         self.assertItemsEqual(transcript_languages, ['de', 'en', 'ur'])
 
+    def test_delete_video_transcript(self):
+        """
+        Verify that `delete_video_transcript` works as expected.
+        """
+        query_filter = {
+            'video_id': 'super-soaker',
+            'language_code': 'de'
+        }
+        self.assertEqual(VideoTranscript.objects.filter(**query_filter).count(), 1)
+        api.delete_video_transcript(**query_filter)
+        self.assertEqual(VideoTranscript.objects.filter(**query_filter).count(), 0)
+
 
 @ddt
 class TranscriptPreferencesTest(TestCase):
